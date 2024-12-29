@@ -14,20 +14,22 @@ const PopularMenu = () => {
             })
     }, [])
     return (
-        <div className='mb-5'>
+        <div className='mb-20'>
             <SectionTitle
                 subHeading="Check it out"
-                heading="From Our Menu"
+                heading="Popular Menu"
             >
             </SectionTitle>
             <div className='grid md:grid-cols-2 gap-3'>
                 {
-                    menu.map(item=> <MenuItem
-                    key={item._id}
-                    item={item}
+                    menu.map(item => <MenuItem
+                        key={item._id}
+                        item={item}
                     ></MenuItem>)
                 }
+
             </div>
+            <button className="btn text-black btn-outline mt-2 border-0 border-b-4 flex mx-auto">View Full Menu!</button>
         </div>
     );
 };
