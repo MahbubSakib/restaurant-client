@@ -1,6 +1,7 @@
 import React from 'react';
 import MenuItem from '../../Home/MenuItem';
 import Cover from '../../../components/Cover';
+import { Link } from 'react-router-dom';
 
 const MenuCategory = ({ items, title, img }) => {
     return (
@@ -15,6 +16,10 @@ const MenuCategory = ({ items, title, img }) => {
                 }
 
             </div>
+            <Link to={`/order/${title}`}>
+                <button className="btn text-black btn-outline mt-2 mb-16 border-0 border-b-4 flex mx-auto">View Full Menu!</button>
+
+            </Link>
         </div>
     );
 };
