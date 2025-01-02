@@ -1,7 +1,25 @@
 import React from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../providers/AuthProvider';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        logOut()
+            .then(() => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Logged out successsfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            })
+            .catch(error => console.log(error.message));
+    }
     return (
         <div>
             <div className="navbar max-w-screen-lg fixed z-[1000] bg-opacity-50 bg-black text-white">
@@ -27,7 +45,7 @@ const Navbar = () => {
                             <li><Link to={'/'}>Home</Link></li>
                             <li><Link to={'/menu'}>Menu</Link></li>
                             <li><Link to={'/order/salad'}>Order Food</Link></li>
-                            <li><Link to={'/login'}>Login</Link></li>
+
                         </ul>
                     </div>
                     <a className="btn btn-ghost text-xl">DINE-FINE</a>
@@ -37,11 +55,17 @@ const Navbar = () => {
                         <li><Link to={'/'}>Home</Link></li>
                         <li><Link to={'/menu'}>Menu</Link></li>
                         <li><Link to={'/order/salad'}>Order Food</Link></li>
-                        <li><Link to={'/login'}>Login</Link></li>
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Button</a>
+                    {
+                        user ? <>
+                            <button onClick={handleLogout} className='btn btn-neutral'>Logout</button>
+                        </> :
+                            <>
+                                <button className='btn btn-primary'><Link to={'/login'}>Login</Link></button>
+                            </>
+                    }
                 </div>
             </div>
         </div>
