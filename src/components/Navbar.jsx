@@ -3,9 +3,13 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../providers/AuthProvider';
 import Swal from 'sweetalert2';
+import { FaCartPlus } from "react-icons/fa";
+import useCart from '../hooks/useCart';
+
 
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
+    const [cart] = useCart();
 
     const handleLogout = () => {
         logOut()
@@ -60,7 +64,14 @@ const Navbar = () => {
                 <div className="navbar-end">
                     {
                         user ? <>
-                            <button onClick={handleLogout} className='btn btn-neutral'>Logout</button>
+                            {/* <p className='pr-5'>{user.displayName}</p> */}
+                            <Link to={'/dashboard/cart'}>
+                                <button className="btn">
+                                    <FaCartPlus className='text-lg'></FaCartPlus>
+                                    <div className="badge badge-secondary">{cart.length}</div>
+                                </button>
+                            </Link>
+                            <button onClick={handleLogout} className='btn btn-neutral ml-3'>Logout</button>
                         </> :
                             <>
                                 <button className='btn btn-primary'><Link to={'/login'}>Login</Link></button>

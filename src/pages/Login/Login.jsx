@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../providers/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
 
@@ -9,11 +9,13 @@ const Login = () => {
     const [disabled, setDisabled] = useState(true);
     const captchaRef = useRef(null);
     const { signIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
-
+    console.log(location.state);
     const handleLogin = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -31,6 +33,8 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
+                
+                navigate(location?.state ? location.state : '/');
             })
     }
 
@@ -82,8 +86,9 @@ const Login = () => {
                                 <input type="text" ref={captchaRef} name='captcha' placeholder="Type Captcha" className="input input-bordered" required />
                             </div>
                             <button onClick={handleValidateCaptcha} type='button' className="btn btn-xs">Validate</button>
+                            {/* todo: make disabled={disabled} */}
                             <div className="form-control mt-6">
-                                <input disabled={disabled} className='btn btn-primary' type="submit" value="Login" />
+                                <input disabled={false} className='btn btn-primary' type="submit" value="Login" />
                             </div>
                         </form>
                         <p className='text-center pb-3'><small>New here? <span className='text-blue-700 hover:text-blue-400'><Link to={'/signup'}>Create an account</Link></span></small></p>
