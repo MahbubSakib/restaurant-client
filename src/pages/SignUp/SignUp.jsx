@@ -5,10 +5,12 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../providers/AuthProvider';
 import Swal from 'sweetalert2';
+import useAxiosPublic from '../../hooks/useAxiosPublic';
 
 const SignUp = () => {
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
 
     const {
         register,
@@ -22,16 +24,25 @@ const SignUp = () => {
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
-                updateUserProfile(data.name, data.photoURL)
-                reset();
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Registered successsfully",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                navigate('/');
+                updateUserProfile(data.name, data.photoURL);
+                const userInfo = {
+                    name: data.name,
+                    email: data.email
+                }
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            reset();
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Registered successsfully",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            navigate('/');
+                        }
+                    })
             })
     }
     return (

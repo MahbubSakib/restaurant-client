@@ -4,6 +4,8 @@ import { AuthContext } from '../../providers/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
+import { FaGoogle } from 'react-icons/fa';
+import SocialLogin from '../../components/SocialLogin/SocialLogin';
 
 const Login = () => {
     const [disabled, setDisabled] = useState(true);
@@ -33,7 +35,7 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                
+
                 navigate(location?.state ? location.state : '/');
             })
     }
@@ -91,6 +93,9 @@ const Login = () => {
                                 <input disabled={false} className='btn btn-primary' type="submit" value="Login" />
                             </div>
                         </form>
+                        <div className='w-full mx-auto text-center'>
+                            <SocialLogin></SocialLogin>
+                        </div>
                         <p className='text-center pb-3'><small>New here? <span className='text-blue-700 hover:text-blue-400'><Link to={'/signup'}>Create an account</Link></span></small></p>
                     </div>
                 </div>
