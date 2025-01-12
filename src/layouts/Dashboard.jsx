@@ -9,7 +9,7 @@ const Dashboard = () => {
     // get isAdmin value from database
     const [isAdmin] = useAdmin();
     return (
-        <div className='flex'>
+        <div className='flex w-10/12'>
             <div className='w-64 min-h-screen bg-orange-400'>
                 <ul className='menu p-4'>
                     {
